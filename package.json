@@ -1,0 +1,27 @@
+{
+  "name": "testing-auto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:LivePage": "ts-node runTest.ts",
+    "test:game": "ts-node runTest.ts --gameId=2 --env=PRO_SG"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^22.14.1",
+    "cross-env": "^7.0.3",
+    "playwright": "^1.52.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "minimist": "^1.2.8"
+  }
+}
