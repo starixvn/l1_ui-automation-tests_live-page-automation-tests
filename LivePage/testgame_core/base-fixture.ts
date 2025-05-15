@@ -13,10 +13,17 @@ type LivePageFixtures = {
 export const test = base.extend<LivePageFixtures>({
     // Fixture chính cho GameBase
     gameBase: async ({ browser }, use) => {
+        let page;
         try {
             // Login và lấy page đã được khởi tạo
             console.log('🔐 Đăng nhập...');
-            const { page } = await Login(false);
+            const loginResult = await Login(true);
+            page = loginResult.page;
+
+            // Tăng timeout cho các thao tác trên page
+            await page.setDefaultTimeout(30000);
+            await page.setDefaultNavigationTimeout(30000);
+
             console.log('✅ Đăng nhập thành công');
 
             // Khởi tạo và cung cấp GameBase instance với page đã login
@@ -34,9 +41,19 @@ test.beforeEach(async ({ }, testInfo) => {
     console.log(`\n🎮 Bắt đầu test case: ${testInfo.title}`);
 });
 
+// Hook chạy sau mỗi test case để cleanup
+test.afterEach(async () => {
+    // Đợi 1 giây trước khi kết thúc test
+    await new Promise(resolve => setTimeout(resolve, 1000));
+});
+
 // Hook chạy sau tất cả test cases
 test.afterAll(async ({ browser }) => {
-    await browser.close();
+    try {
+        await browser.close();
+    } catch (error) {
+        console.error('Lỗi khi đóng browser:', error);
+    }
 });
 
 // Export để sử dụng trong các test

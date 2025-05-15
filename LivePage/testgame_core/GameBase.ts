@@ -1,4 +1,4 @@
-import { test, Page, expect } from "@playwright/test";
+import { Page } from "@playwright/test";
 import openLivePage, { LiveEnvType } from "../Commons/OpenLivepage";
 import OpenGameTab from "../Commons/OpenGameTab";
 import { checkOdds } from "../Commons/CheckOdds";
@@ -49,10 +49,16 @@ export class GameBase {
             await WaitNewround(this.page, gameConfig.gameId, gameConfig);
             console.log('✅ Đã tìm thấy round mới');
 
-            // Đặt cược thử với lựa chọn mặc định từ config
-            console.log('💰 Thử đặt cược...');
-            await this.placeBet(gameConfig.betConfig.defaultChoice);
-            console.log('✅ Đặt cược thử thành công');
+            // Đặt cược cho bet choice đầu tiên của game
+            const firstBetChoice = gameConfig.choices[0];
+            console.log(`💰 Thử đặt cược cho lựa chọn đầu tiên: ${firstBetChoice}...`);
+            try {
+                await this.placeBet(firstBetChoice);
+                console.log(`✅ Đặt cược thành công cho lựa chọn: ${firstBetChoice}`);
+            } catch (error: any) {
+                console.error(`❌ Lỗi khi đặt cược ${firstBetChoice}:`, error.message);
+                throw error;
+            }
 
             console.log(`\n✅ Test game ${gameConfig.gameName} hoàn tất thành công!\n`);
         } catch (error: any) {
