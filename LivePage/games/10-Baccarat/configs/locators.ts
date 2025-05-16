@@ -6,8 +6,8 @@ export type BaccaratBetChoice = 'player' | 'banker' | 'tie';
 // Locators cho môi trường PRO_SG
 export const PRO_SG_Locators: IBaseLocator = {
     betChoices: {
-        'player': "//div[contains(@class,'bet-option-player')]",
-        'banker': "//div[contains(@class,'bet-option-banker')]",
+        'player': "(//div[text()='Nhà Con'])[2]",
+        'banker': "(//div[text()='Nhà Cái'])[2]",
         'tie': "//div[contains(@class,'bet-option-tie')]"
     },
     oddsLocators: {

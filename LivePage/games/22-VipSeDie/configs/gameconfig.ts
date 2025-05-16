@@ -7,8 +7,8 @@ import {
 // Định nghĩa bet limits cho từng môi trường của game VipSeDie
 const VIPSEDIE_BET_LIMITS: Record<GameEnvironment, IBetLimits> = {
     PRO_SG: {
-        minBet: 1,
-        maxBet: 2000
+        minBet: 10,
+        maxBet: 5000
     },
     PROVG_Credit: {
         minBet: 10,

@@ -28,7 +28,7 @@ const COMMON_CONFIG = {
     odds: {
         player: 2.0,
         banker: 1.95,
-        tie: 8.0
+        tie: 9.0
     },
     expectedOdds: 'Nhà Con2.00Nhà Cái1.95Hòa9.00Con Đôi12.00Cái Đôi12.00',
     betConfig: {

@@ -7,7 +7,7 @@ import { GameEnvironment } from '../../../Configs/gameconfig_base';
 test.describe('Baccarat Smoke Tests', () => {
     test('Verify Baccarat Livepage', async ({ gameBase }) => {
         test.setTimeout(120000); // 2 phút
-
+        try {
         // Lấy environment từ biến môi trường hoặc mặc định là PRO_SG
         const env = (process.env.TEST_ENV || 'PRO_SG') as GameEnvironment;
         
@@ -17,5 +17,9 @@ test.describe('Baccarat Smoke Tests', () => {
 
         // Chạy test với config và locators đã được setup
         await gameBase.runTest(gameConfig, locators);
+    } catch (error: any) {
+        console.error('❌ Lỗi trong test:', error.message);
+        throw error;
+    }
     });
 }); 

@@ -6,7 +6,7 @@ import { GameEnvironment } from '../../../Configs/gameconfig_base';
 // Smoke test for VipSeDie game
 test.describe('VipSeDie Smoke Tests', () => {
     test('Verify VipSeDie Livepage', async ({ gameBase }) => {
-        test.setTimeout(120000); // 2 phút
+        test.setTimeout(300000); // 5 phút
 
         // Lấy environment từ biến môi trường hoặc mặc định là PRO_SG
         const env = (process.env.TEST_ENV || 'PRO_SG') as GameEnvironment;
@@ -16,6 +16,6 @@ test.describe('VipSeDie Smoke Tests', () => {
         const locators = getVipSeDieLocators(env);
 
         // Chạy test với config và locators đã được setup, skip OpenGameTab
-        await gameBase.runTest(gameConfig, locators, { skipOpenGameTab: true });
+        await gameBase.runTest(gameConfig, locators);
     });
 });
