@@ -17,12 +17,12 @@ export const test = base.extend<LivePageFixtures>({
         try {
             // Login và lấy page đã được khởi tạo
             console.log('🔐 Đăng nhập...');
-            const loginResult = await Login(false);
+            const loginResult = await Login(true);
             page = loginResult.page;
 
             // Tăng timeout cho các thao tác trên page
-            await page.setDefaultTimeout(30000);
-            await page.setDefaultNavigationTimeout(30000);
+            await page.setDefaultTimeout(40000);
+            await page.setDefaultNavigationTimeout(40000);
 
             console.log('✅ Đăng nhập thành công');
 

@@ -80,7 +80,7 @@ export async function placeBet(
             const expectedWinAmount = gameConfig.betLimits.minBet * gameConfig.odds[choiceToUse];
             
             if (Math.abs(winAmount - expectedWinAmount) < 1) {
-                console.log(`🎉 User thắng cược! Số tiền thắng: ${winAmount}`);
+                console.log(`🎉 User thắng cược! Số tiền thắng: ${expectedWinAmount}`);
             } else {
                 console.log(`⚠️ Kết quả không khớp. Win amount: ${winAmount}, Expected: ${expectedWinAmount}`);
             }

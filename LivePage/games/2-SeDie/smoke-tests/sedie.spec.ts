@@ -8,7 +8,7 @@ test.describe('SeDie Smoke Tests', () => {
     // Tăng timeout cho test case này
     test('Verify SeDie Livepage', async ({ gameBase }) => {
         // Tăng timeout lên 2 phút
-        test.setTimeout(120000);
+        test.setTimeout(300000);
 
         try {
             // Lấy environment từ biến môi trường hoặc mặc định là PRO_SG

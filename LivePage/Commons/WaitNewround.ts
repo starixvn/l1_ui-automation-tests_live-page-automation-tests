@@ -76,7 +76,7 @@ export async function WaitNewround(page: Page, gameId: number, gameConfig: IGame
 
         } catch (error) {
             // Bỏ qua lỗi và tiếp tục vòng lặp
-            console.log('⚠️ Lỗi khi đọc timer, thử lại...');
+           // console.log('⚠️ Lỗi khi đọc timer, thử lại...');
         }
 
         // Đợi 500ms trước khi kiểm tra lại

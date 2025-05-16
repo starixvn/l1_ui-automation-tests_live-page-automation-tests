@@ -34,7 +34,7 @@ export class GameBase {
             
             // Mở tab game (nếu không skip)
             if (!options.skipOpenGameTab) {
-                console.log(`🎮 Mở tab game ${gameConfig.gameName}...`);
+               // console.log(`🎮 Mở tab game ${gameConfig.gameName}...`);
                 await OpenGameTab(this.page, gameConfig.gameId);
                 console.log('✅ Mở tab game thành công');
             }
@@ -45,16 +45,16 @@ export class GameBase {
             console.log('✅ Kiểm tra odds thành công');
             
             // Đợi round mới
-            console.log('⏳ Đợi round mới...');
+           // console.log('⏳ Đợi round mới...');
             await WaitNewround(this.page, gameConfig.gameId, gameConfig);
-            console.log('✅ Đã tìm thấy round mới');
+           // console.log('✅ Đã tìm thấy round mới');
 
             // Đặt cược cho bet choice đầu tiên của game
             const firstBetChoice = gameConfig.choices[0];
-            console.log(`💰 Thử đặt cược cho lựa chọn đầu tiên: ${firstBetChoice}...`);
+            //console.log(`💰 Thử đặt cược cho lựa chọn đầu tiên: ${firstBetChoice}...`);
             try {
                 await this.placeBet(firstBetChoice);
-                console.log(`✅ Đặt cược thành công cho lựa chọn: ${firstBetChoice}`);
+               // console.log(`✅ Đặt cược thành công cho lựa chọn: ${firstBetChoice}`);
             } catch (error: any) {
                 console.error(`❌ Lỗi khi đặt cược ${firstBetChoice}:`, error.message);
                 throw error;
