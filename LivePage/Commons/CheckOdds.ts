@@ -16,20 +16,11 @@ export async function checkOdds(
             throw new Error(`Không tìm thấy game tab cho game ID: ${gameId}`);
         }
 
-        console.log(`🎲 Kiểm tra odds cho game: ${gameTab}`);
-        
-        // Debug logs
-        console.log('Debug - gameLocator:', gameLocator);
-        console.log('Debug - oddsLocators:', gameLocator.oddsLocators);
-        console.log('Debug - checkodds path:', gameLocator.oddsLocators?.['checkodds']);
-        console.log('Debug - Available odds locators:', Object.keys(gameLocator.oddsLocators || {}));
-
         // 2. Lấy xpath checkodds từ locator và thay thế ${gameTab}
         if (!gameLocator.oddsLocators?.['checkodds']) {
             throw new Error('Không tìm thấy checkodds xpath trong locator');
         }
         const checkOddsXPath = gameLocator.oddsLocators['checkodds'].replace('${gameTab}', gameTab);
-        console.log(`🔍 Checking với xpath: ${checkOddsXPath}`);
 
         // 3. Lấy expected odds từ config
         const expectedOdds = gameConfig.expectedOdds;
@@ -47,10 +38,10 @@ export async function checkOdds(
 
         // 5. So sánh với expected odds
         if (currentOdds.trim() === expectedOdds.trim()) {
-            console.log(`✅ Game hiển thị đúng các odds!\n- Expected: ${expectedOdds}\n- Actual: ${currentOdds}`);
+            console.log(`✅ Odds của game ${gameTab} đúng như kỳ vọng: ${currentOdds}`);
         } else {
             throw new Error(
-                `Odds không khớp:\n` +
+                `❌ Odds không khớp cho game ${gameTab}:\n` +
                 `- Expected: ${expectedOdds}\n` +
                 `- Actual: ${currentOdds}`
             );

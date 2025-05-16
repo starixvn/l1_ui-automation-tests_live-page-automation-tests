@@ -2,77 +2,91 @@ import { Page } from "playwright";
 import gameIdToTabName from "../Configs/gameTabMap";
 import { IGameConfig } from "../Configs/gameconfig_base";
 
+/**
+ * Đợi cho đến khi một vòng mới bắt đầu
+ * @param page - Trang Playwright hiện tại
+ * @param gameId - ID của game
+ * @param gameConfig - Config của game
+ * @returns Promise<void>
+ */
 export async function WaitNewround(page: Page, gameId: number, gameConfig: IGameConfig): Promise<void> {
-    console.log(`WaitNewround received gameId: ${gameId}`);
     if (!gameId) {
         throw new Error('❌ gameId không được truyền vào WaitNewround.');
     }
 
     const gameTab = gameIdToTabName[gameId];
-    //console.log(`Debugging WaitNewround - gameId: ${gameId}, gameTab: ${gameTab}`); // Log giá trị gameId và gameTab
-
     if (!gameTab) {
         throw new Error(`❌ GAME_ID ${gameId} không hợp lệ hoặc chưa được map trong gameTabMap.`);
     }
 
-    const timerLocator = page.locator(`xpath=//div[text()='${gameTab}']//following::div[contains(@class,'in-play')][1]//div[2]/div[1]/div[2]/span[1]`);
+    console.log(`⏳ Đang đợi vòng mới cho game ${gameTab} (timer = ${gameConfig.timerStart})...`);
 
-    console.log(`⏳ Đang đợi timer = ${gameConfig.timerStart} để bắt đầu vòng mới...`);
-   // console.log(`🔍 Kiểm tra locator: ${timerLocator}`); // Log locator trước khi gọi waitFor
-
-   // console.log(`🔍 Kiểm tra trạng thái page: isClosed=${page.isClosed()}`); // Log trạng thái của page
     if (page.isClosed()) {
-        throw new Error('❌ Trang đã bị đóng trước khi gọi waitFor.');
+        throw new Error('❌ Trang đã bị đóng.');
     }
 
+    // Tìm timer element
+    const timerLocator = page.locator(`xpath=//div[text()='${gameTab}']//following::div[contains(@class,'in-play')][1]//div[2]/div[1]/div[2]/span[1]`);
+    
     try {
-        console.log('⏳ Đang đợi timerLocator hiển thị...');
-        await timerLocator.waitFor({ state: 'visible', timeout: 60000 }); // Tăng timeout lên 60 giây
-        console.log('✅ timerLocator đã hiển thị!');
+        // Đợi timer element xuất hiện
+        console.log(`🔍 Đợi timer element xuất hiện cho game ${gameTab}...`);
+        await timerLocator.waitFor({ 
+            state: 'visible', 
+            timeout: 60000
+        });
     } catch (error) {
-        const errorScreenshotPath = `test-results/locator-error-${gameId}-${Date.now()}.png`;
+        const errorScreenshotPath = `test-results/timer-not-found-${gameId}-${Date.now()}.png`;
         await page.screenshot({ path: errorScreenshotPath });
-        console.error(`❌ Không tìm thấy timerLocator: ${(error as Error).message}`);
-        console.log(`📸 Đã chụp ảnh màn hình khi lỗi xảy ra: ${errorScreenshotPath}`);
+        console.error(`❌ Không tìm thấy timer sau 60s cho game ${gameTab}. Screenshot: ${errorScreenshotPath}`);
         throw error;
     }
 
-    const maxTimeout = 60000; // Tăng thời gian chờ tổng thể lên 60 giây
+    const maxTimeout = 60000;
     const startTime = Date.now();
+    let lastTimerValue = '';
 
     while (Date.now() - startTime < maxTimeout) {
         try {
-            // Đợi locator xuất hiện
-            await timerLocator.waitFor({ state: 'visible', timeout: 500 }); // Giảm thời gian chờ giữa các lần kiểm tra
-
-           // console.log(`🔍 Kiểm tra trạng thái page: isClosed=${page.isClosed()}`); // Log trạng thái của page
+            // Kiểm tra trang có bị đóng không
             if (page.isClosed()) {
-                throw new Error('❌ Trang đã bị đóng trước khi gọi evaluate.');
+                throw new Error('❌ Trang đã bị đóng trong khi đợi vòng mới.');
             }
+
+            // Đợi timer element
+            await timerLocator.waitFor({ 
+                state: 'visible', 
+                timeout: 500
+            });
 
             // Lấy giá trị timer
-            const timerValue = await timerLocator.evaluate((el) => el.textContent?.trim());
-            //console.log(`⏱️ Giá trị timer hiện tại: ${timerValue}`);
+            const timerValue = await timerLocator.evaluate((el) => el.textContent?.trim() || '');
 
+            // Log nếu timer thay đổi
+            if (timerValue !== lastTimerValue) {
+                //console.log(`⏱️ Timer: ${timerValue}`);
+                lastTimerValue = timerValue;
+            }
+
+            // Kiểm tra nếu đã đến vòng mới
             if (timerValue === gameConfig.timerStart.toString()) {
-                console.log(`✅ Vòng mới bắt đầu - timer = ${gameConfig.timerStart}`);
-                const screenshotPath = `test-results/round-start-${gameTab}-${Date.now()}.png`;
-                await page.screenshot({ path: screenshotPath });
-                console.log(`📸 Đã chụp ảnh màn hình khi vòng mới bắt đầu: ${screenshotPath}`);
+                console.log(`✅ Vòng mới bắt đầu (timer = ${timerValue})`);
                 return;
             }
+
         } catch (error) {
-            console.warn(`⚠️ Lỗi khi kiểm tra timer: ${error}`);
+            // Bỏ qua lỗi và tiếp tục vòng lặp
+            console.log('⚠️ Lỗi khi đọc timer, thử lại...');
         }
 
-        // Chờ 500ms trước khi kiểm tra lại
+        // Đợi 500ms trước khi kiểm tra lại
         await page.waitForTimeout(500);
     }
 
+    // Chụp ảnh nếu timeout
     const errorScreenshotPath = `test-results/round-timeout-${gameId}-${Date.now()}.png`;
     await page.screenshot({ path: errorScreenshotPath });
-    console.log(`📸 Đã chụp ảnh màn hình khi hết thời gian chờ: ${errorScreenshotPath}`);
-    throw new Error(`❌ Timeout: Không xác định được vòng mới (timer = ${gameConfig.timerStart}) sau ${maxTimeout / 1000} giây.`);
-};
+    throw new Error(`❌ Không tìm thấy vòng mới sau ${maxTimeout / 1000}s cho game ${gameTab}. Screenshot: ${errorScreenshotPath}`);
+}
 
 export default WaitNewround;

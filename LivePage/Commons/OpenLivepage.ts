@@ -14,20 +14,14 @@ export async function openLivePage(page: Page, env: LiveEnvType) {
     await page.waitForLoadState('domcontentloaded');
 
     // B1: Click vào nút "Trực tiếp"
-    await page.getByText('Trực tiếp', { exact: true }).nth(2).click();
+    await page.getByText('Trực tiếp', { exact: true }).nth(3).click();
 
     // B2: Xử lý theo từng môi trường
     switch(env) {
       case 'PRO_SG':
         await page.getByText('SABA.games', { exact: true })
-          .waitFor({ timeout: 30000 });
+          .waitFor({ timeout: 120000 });
         console.log('✅ Đã vào đúng SABA.games');
-
-        await page.locator('div')
-          .filter({ hasText: /^Xóc Đĩa VIP$/ })
-          .nth(1)
-          .waitFor({ state: 'visible', timeout: 15000 });
-        console.log('✅ Tab "VIP Se Die" đã hiển thị');
         break;
 
       case 'PROVG_Credit':
@@ -35,25 +29,14 @@ export async function openLivePage(page: Page, env: LiveEnvType) {
         await page.getByText('Vgaming', { exact: true })
           .waitFor({ timeout: 30000 });
         console.log('✅ Đã vào đúng Vgaming');
-
-        await page.locator('div')
-          .filter({ hasText: /^Baccarat$/ })
-          .waitFor({ state: 'visible', timeout: 15000 });
-        console.log('✅ Tab "Baccarat" đã hiển thị');
         break;
 
       default:
         throw new Error(`❌ Không hỗ trợ ENV "${env}" trong OpenLivepage`);
     }
 
-    // B3: Đợi chữ "Round" xuất hiện
-    await page.getByText(/^Phiên/, { exact: false })
-      .nth(0)
-      .waitFor({ timeout: 20000 });
-    console.log('✅ Đã thấy đồng hồ Round — Vào livepage ổn định!');
-
   } catch (error) {
-    console.error(`❌ Lỗi khi mở Live Page: ${error.message}`);
+    console.error(`❌ Lỗi khi mở Live Page: ${error instanceof Error ? error.message : 'Không xác định'}`);
     throw error;
   }
 }

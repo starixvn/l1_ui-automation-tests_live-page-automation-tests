@@ -8,7 +8,7 @@ export async function launchBrowser(headless: boolean = true): Promise<{
   const browser = await chromium.launch({ headless });
 
   const context = await browser.newContext({
-    viewport: { width: 1250, height: 520 }, // 👉 Fix viewport đẹp
+    viewport: { width: 1250, height: 700 }, // 👉 Fix viewport đẹp
     recordHar: { path: 'harfiles/login.har' },
   });
 

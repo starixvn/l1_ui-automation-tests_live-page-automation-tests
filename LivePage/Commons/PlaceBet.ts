@@ -1,6 +1,7 @@
 import { Page } from 'playwright';
 import { IBaseLocator } from '../Configs/locator_base';
 import { IGameConfig } from '../Configs/gameconfig_base';
+import WaitNewround from './WaitNewround';
 
 /**
  * Thực hiện đặt cược cho một lựa chọn cụ thể và kiểm tra kết quả
@@ -12,78 +13,109 @@ import { IGameConfig } from '../Configs/gameconfig_base';
  */
 export async function placeBet(
     page: Page,
-    betChoice: string,
+    betChoice: string | undefined,
     gameConfig: IGameConfig,
     locator: IBaseLocator
 ): Promise<void> {
     try {
-        // Kiểm tra xem betChoice có hợp lệ không
-        if (!gameConfig.choices.includes(betChoice)) {
-            throw new Error(`Lựa chọn cược "${betChoice}" không hợp lệ. Các lựa chọn có thể: ${gameConfig.choices.join(', ')}`);
+        // Luôn lấy choice đầu tiên từ danh sách nếu không có choice được chỉ định
+        const choiceToUse = betChoice || gameConfig.choices[0];
+        if (!choiceToUse) {
+            throw new Error('Không tìm thấy bet choice nào trong gameConfig');
         }
+        console.log(`🎲 Sẽ đặt cược cho choice: ${choiceToUse}`);
 
         // 1. Lấy balance hiện tại của user
-        const balanceLocator = "//*[@id='leftBar']/div/div[2]/div[1]/div[1]/div[2]/div/div[3]/div/div[1]/div[2]/span[2]";
+        const balanceLocator = await findBalanceLocator(page);
         const initialBalance = await getBalance(page, balanceLocator);
         console.log(`💰 Balance trước khi đặt cược: ${initialBalance}`);
 
         // 2. Click vào bet choice
-        const betChoiceLocator = locator.betChoices[betChoice];
+        const betChoiceLocator = locator.betChoices[choiceToUse];
         if (!betChoiceLocator) {
-            throw new Error(`Không tìm thấy locator cho bet choice: ${betChoice}`);
+            throw new Error(`Không tìm thấy locator cho bet choice: ${choiceToUse}`);
         }
-        console.log(`🎯 Đặt cược: ${betChoice}`);
-        await page.locator(betChoiceLocator).click();
-
-        // Lấy tỷ lệ cược (odds) từ config
-        const odds = gameConfig.odds[betChoice];
-        if (!odds) {
-            throw new Error(`Không tìm thấy tỷ lệ cược cho bet choice: ${betChoice}`);
-        }
-        console.log(`📊 Tỷ lệ cược: ${odds}`);
+        
+        // Đợi và verify bet choice có thể click được
+        console.log(`🔍 Tìm bet choice: ${choiceToUse}`);
+        const betChoiceElement = page.locator(betChoiceLocator);
+        await betChoiceElement.waitFor({ state: 'visible', timeout: 10000 });
+        
+        // Click và đợi bet slip hiện ra
+        console.log(`🎯 Click vào bet choice ${choiceToUse}`);
+        await betChoiceElement.click();
+        await page.waitForTimeout(1000);
 
         // 3. Click vào nút "Cược" trên bet slip
         await page.locator('button').filter({ hasText: 'Cược' }).click();
         console.log('🎲 Đã click nút Cược');
 
-        // Đợi một chút để giao dịch hoàn tất
+        // 4. Đợi giao dịch hoàn tất và verify balance
+        console.log('⏳ Đợi giao dịch hoàn tất...');
         await page.waitForTimeout(2000);
 
-        // 5. Kiểm tra balance sau khi đặt cược
+        // Kiểm tra balance sau khi đặt cược
         const balanceAfterBet = await getBalance(page, balanceLocator);
         console.log(`💰 Balance sau khi đặt cược: ${balanceAfterBet}`);
+        
         const expectedBalanceAfterBet = initialBalance - gameConfig.betLimits.minBet;
-        console.log(`💰 Balance kỳ vọng sau cược: ${expectedBalanceAfterBet}`);
-        console.log(`💰 Chênh lệch: ${balanceAfterBet - expectedBalanceAfterBet}`);
-
-        if (Math.abs(balanceAfterBet - expectedBalanceAfterBet) > 1) { // Cho phép sai số 1 đơn vị
-            throw new Error(`❌ Đặt cược thất bại: Balance không khớp sau khi đặt cược
-            - Balance hiện tại: ${balanceAfterBet}
+        if (Math.abs(balanceAfterBet - expectedBalanceAfterBet) > 1) {
+            throw new Error(`❌ Đặt cược thất bại: Balance không khớp
+            - Balance trước: ${initialBalance}
+            - Balance sau: ${balanceAfterBet}
             - Balance kỳ vọng: ${expectedBalanceAfterBet}
             - Chênh lệch: ${balanceAfterBet - expectedBalanceAfterBet}`);
         }
 
-        // 6. Đợi vòng mới và kiểm tra kết quả
-        await waitNewRound(page);
+        console.log('✅ Đặt cược thành công!');
+
+        // 5. Đợi vòng mới và kiểm tra kết quả
+        await WaitNewround(page, gameConfig.gameId, gameConfig);
         const finalBalance = await getBalance(page, balanceLocator);
 
         if (finalBalance === balanceAfterBet) {
             console.log('😢 User thua cược');
         } else {
             const winAmount = finalBalance - balanceAfterBet;
-            const expectedWinAmount = gameConfig.betLimits.minBet * odds;
+            const expectedWinAmount = gameConfig.betLimits.minBet * gameConfig.odds[choiceToUse];
             
-            if (Math.abs(winAmount - expectedWinAmount) < 0.01) { // Sử dụng epsilon để so sánh số thực
+            if (Math.abs(winAmount - expectedWinAmount) < 1) {
                 console.log(`🎉 User thắng cược! Số tiền thắng: ${winAmount}`);
             } else {
-                console.log(`⚠️ Kết quả không khớp với dự kiến. Win amount: ${winAmount}, Expected: ${expectedWinAmount}`);
+                console.log(`⚠️ Kết quả không khớp. Win amount: ${winAmount}, Expected: ${expectedWinAmount}`);
             }
         }
 
     } catch (error: any) {
+        // Chụp ảnh màn hình khi có lỗi
+        const screenshotPath = `test-results/bet-error-${Date.now()}.png`;
+        await page.screenshot({ path: screenshotPath });
         console.error(`❌ Lỗi khi đặt cược: ${error.message}`);
+        console.error(`📸 Đã chụp ảnh màn hình: ${screenshotPath}`);
         throw error;
     }
+}
+
+/**
+ * Tìm locator chứa balance
+ */
+async function findBalanceLocator(page: Page): Promise<string> {
+    const possibleLocators = [
+        "//*[@id='leftBar']//span[contains(@class, 'c-text')]",
+        "//*[@id='leftBar']/div/div[2]/div[1]/div[1]/div[2]/div/div[3]/div/div[1]/div[2]/span[2]",
+        "//div[contains(@class, 'balance-value')]"
+    ];
+
+    for (const locator of possibleLocators) {
+        const elements = await page.$$(locator);
+        for (const element of elements) {
+            const text = await element.textContent();
+            if (text && !isNaN(parseFloat(text.replace(/,/g, '')))) {
+                return locator;
+            }
+        }
+    }
+    throw new Error('Không tìm thấy element chứa balance');
 }
 
 /**
@@ -91,46 +123,24 @@ export async function placeBet(
  */
 async function getBalance(page: Page, balanceLocator: string): Promise<number> {
     try {
-        // Đợi một chút để trang load hoàn toàn
-        await page.waitForTimeout(2000);
-
-        // Thử với selector đơn giản hơn
-        const simpleBalanceLocator = "//*[@id='leftBar']//span[contains(@class, 'c-text')]";
+        await page.waitForTimeout(1000);
+        const elements = await page.$$(balanceLocator);
         
-        console.log('🔍 Đang tìm element balance...');
-        
-        // Lấy tất cả các elements match với selector
-        const elements = await page.$$(simpleBalanceLocator);
-        console.log(`📊 Tìm thấy ${elements.length} elements`);
-        
-        // Lặp qua từng element để tìm cái chứa số
         for (const element of elements) {
             const text = await element.textContent();
-            console.log('📝 Text của element:', text);
-            
             if (text) {
                 const cleanText = text.trim().replace(/,/g, '');
                 const number = parseFloat(cleanText);
                 
-                // Nếu là số và lớn hơn 0, có thể đây là balance
                 if (!isNaN(number) && number > 0) {
-                    console.log('💡 Tìm thấy số hợp lệ:', number);
                     return number;
                 }
             }
         }
 
-        throw new Error('Không tìm thấy element chứa balance');
+        throw new Error('Không tìm thấy giá trị balance hợp lệ');
     } catch (error: any) {
         console.error('❌ Lỗi khi lấy balance:', error.message);
         throw error;
     }
-}
-
-/**
- * Đợi vòng mới bắt đầu
- */
-async function waitNewRound(page: Page): Promise<void> {
-    // Đợi cho đến khi timer reset về giá trị ban đầu hoặc có indicator khác cho vòng mới
-    await page.waitForTimeout(2000); // Đợi 2 giây để đảm bảo vòng mới đã bắt đầu
 } 

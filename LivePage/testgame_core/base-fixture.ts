@@ -17,7 +17,7 @@ export const test = base.extend<LivePageFixtures>({
         try {
             // Login và lấy page đã được khởi tạo
             console.log('🔐 Đăng nhập...');
-            const loginResult = await Login(true);
+            const loginResult = await Login(false);
             page = loginResult.page;
 
             // Tăng timeout cho các thao tác trên page
