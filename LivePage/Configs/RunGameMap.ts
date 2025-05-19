@@ -15,5 +15,11 @@ export function getSpecFileByGameId(gameId: number): string {
   if (gameId === 3) {
     return 'LivePage/games/3-FishPrawnCrab/smoke-tests/fishprawncrab.spec.ts';
   }
+  if (gameId === 71) {
+    return 'LivePage/games/71-ColorGame/smoke-tests/colorgame.spec.ts';
+  }
+  if (gameId === 80) {
+    return 'LivePage/games/80-CoinToss/smoke-tests/cointoss.spec.ts';
+  }
   throw new Error(`Không tìm thấy spec file cho GAME_ID = ${gameId}`);
 }
