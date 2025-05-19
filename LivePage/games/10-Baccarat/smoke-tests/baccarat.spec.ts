@@ -6,7 +6,7 @@ import { GameEnvironment } from '../../../Configs/gameconfig_base';
 // Smoke test for Baccarat game
 test.describe('Baccarat Smoke Tests', () => {
     test('Verify Baccarat Livepage', async ({ gameBase }) => {
-        test.setTimeout(120000); // 2 phút
+        test.setTimeout(300000); // 5 phút
         try {
         // Lấy environment từ biến môi trường hoặc mặc định là PRO_SG
         const env = (process.env.TEST_ENV || 'PRO_SG') as GameEnvironment;

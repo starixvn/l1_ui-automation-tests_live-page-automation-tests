@@ -26,7 +26,6 @@ export interface IGameConfig {
     gameId: number;
     gameName: string;
     env: GameEnvironment;
-    betConfig: IBetConfig;
 
     // Cấu hình cược
     choices: string[];           // Các lựa chọn cược có thể

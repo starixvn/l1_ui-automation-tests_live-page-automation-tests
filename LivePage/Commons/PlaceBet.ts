@@ -37,7 +37,7 @@ export async function placeBet(
         }
         
         // Đợi và verify bet choice có thể click được
-        console.log(`🔍 Tìm bet choice: ${choiceToUse}`);
+       // console.log(`🔍 Tìm bet choice: ${choiceToUse}`);
         const betChoiceElement = page.locator(betChoiceLocator);
         await betChoiceElement.waitFor({ state: 'visible', timeout: 10000 });
         

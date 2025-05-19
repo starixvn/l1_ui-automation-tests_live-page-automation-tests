@@ -71,8 +71,8 @@ export const PROVG_Credit_Locators: IBaseLocator = {
 // Locators cho môi trường PROVG_Cash
 export const PROVG_Cash_Locators: IBaseLocator = {
     betChoices: {
-        'odd': "//div[@data-testid='odd-choice']",
-        'even': "//div[@data-testid='even-choice']",
+        'odd': "//div[text()='Lẻ']/following::div[1]",
+        'even': "//div[text()='Chẵn']/following::div[1]",
         'red2': "//div[@data-testid='red2-choice']",
         'red3': "//div[@data-testid='red3-choice']",
         'red4': "//div[@data-testid='red4-choice']",

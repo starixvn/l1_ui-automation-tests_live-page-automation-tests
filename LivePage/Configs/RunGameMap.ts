@@ -10,7 +10,10 @@ export function getSpecFileByGameId(gameId: number): string {
     return 'LivePage/games/22-VipSeDie/smoke-tests/vipsedie.spec.ts';
   }
   if (gameId === 55) {
-    return 'LivePage/SmokeTest/55-MonteBigSmall/MonteBigSmall.spec.ts';
+    return 'LivePage/games/55-MonteBigSmall/smoke-tests/montebigsmall.spec.ts';
+  }
+  if (gameId === 3) {
+    return 'LivePage/games/3-FishPrawnCrab/smoke-tests/fishprawncrab.spec.ts';
   }
   throw new Error(`Không tìm thấy spec file cho GAME_ID = ${gameId}`);
 }

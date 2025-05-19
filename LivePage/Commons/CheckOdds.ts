@@ -1,5 +1,4 @@
 import { Page } from "playwright";
-import gameIdToTabName from "../Configs/gameTabMap";
 import { IBaseLocator } from "../Configs/locator_base";
 import { IGameConfig } from "../Configs/gameconfig_base";
 
@@ -10,17 +9,17 @@ export async function checkOdds(
     gameConfig: IGameConfig
 ): Promise<void> {
     try {
-        // 1. Lấy gameTab từ gameId
-        const gameTab = gameIdToTabName[gameId];
-        if (!gameTab) {
-            throw new Error(`Không tìm thấy game tab cho game ID: ${gameId}`);
+        // 1. Lấy game name từ config
+        const gameName = gameConfig.gameName;
+        if (!gameName) {
+            throw new Error(`Không tìm thấy game name trong config cho game ID: ${gameId}`);
         }
 
-        // 2. Lấy xpath checkodds từ locator và thay thế ${gameTab}
+        // 2. Lấy xpath checkodds từ locator và thay thế ${gameTab} bằng gameName
         if (!gameLocator.oddsLocators?.['checkodds']) {
             throw new Error('Không tìm thấy checkodds xpath trong locator');
         }
-        const checkOddsXPath = gameLocator.oddsLocators['checkodds'].replace('${gameTab}', gameTab);
+        const checkOddsXPath = gameLocator.oddsLocators['checkodds'].replace('${gameTab}', gameName);
 
         // 3. Lấy expected odds từ config
         const expectedOdds = gameConfig.expectedOdds;
@@ -38,10 +37,10 @@ export async function checkOdds(
 
         // 5. So sánh với expected odds
         if (currentOdds.trim() === expectedOdds.trim()) {
-            console.log(`✅ Odds của game ${gameTab} đúng như kỳ vọng: ${currentOdds}`);
+            console.log(`✅ Odds của game ${gameName} đúng như kỳ vọng: ${currentOdds}`);
         } else {
             throw new Error(
-                `❌ Odds không khớp cho game ${gameTab}:\n` +
+                `❌ Odds không khớp cho game ${gameName}:\n` +
                 `- Expected: ${expectedOdds}\n` +
                 `- Actual: ${currentOdds}`
             );
@@ -50,4 +49,4 @@ export async function checkOdds(
     } catch (error: any) {
         throw new Error(`❌ Lỗi khi kiểm tra odds: ${error.message}`);
     }
-} 
+}

@@ -36,11 +36,7 @@ const COMMON_CONFIG = {
     },
     expectedOdds: 'Lẻ1.96Chẵn1.9614.403.752.4014.403.75',
     hedgeBetGroups: [["even", "odd"]],
-    betConfig: {
-        defaultChoice: "even",
-        defaultAmount: 10000
-    },
-    timerStart: 30 // Thời gian bắt đầu vòng mới
+    timerStart: 30
 };
 
 export const vipSeDieConfig = (env: GameEnvironment): IGameConfig => {
@@ -58,4 +54,4 @@ export const vipSeDieConfig = (env: GameEnvironment): IGameConfig => {
     };
 };
 
-export default vipSeDieConfig; 
+export default vipSeDieConfig;

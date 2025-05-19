@@ -23,7 +23,7 @@ const BACCARAT_BET_LIMITS: Record<GameEnvironment, IBetLimits> = {
 // Config chung cho game Baccarat
 const COMMON_CONFIG = {
     gameId: 10,
-    gameName: 'Baccarat',
+    gameName: 'Cào Baccarat',
     choices: ["player", "banker", "tie"],
     odds: {
         player: 2.0,
@@ -31,10 +31,6 @@ const COMMON_CONFIG = {
         tie: 9.0
     },
     expectedOdds: 'Nhà Con2.00Nhà Cái1.95Hòa9.00Con Đôi12.00Cái Đôi12.00',
-    betConfig: {
-        defaultChoice: "player",
-        defaultAmount: 10000
-    },
     timerStart: 30 // Thời gian bắt đầu vòng mới
 };
 
@@ -53,4 +49,4 @@ export const baccaratConfig = (env: GameEnvironment): IGameConfig => {
     };
 };
 
-export default baccaratConfig; 
+export default baccaratConfig;

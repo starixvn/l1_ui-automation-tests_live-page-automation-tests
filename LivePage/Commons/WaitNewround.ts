@@ -1,5 +1,4 @@
 import { Page } from "playwright";
-import gameIdToTabName from "../Configs/gameTabMap";
 import { IGameConfig } from "../Configs/gameconfig_base";
 
 /**
@@ -14,23 +13,23 @@ export async function WaitNewround(page: Page, gameId: number, gameConfig: IGame
         throw new Error('❌ gameId không được truyền vào WaitNewround.');
     }
 
-    const gameTab = gameIdToTabName[gameId];
-    if (!gameTab) {
-        throw new Error(`❌ GAME_ID ${gameId} không hợp lệ hoặc chưa được map trong gameTabMap.`);
+    if (!gameConfig.gameName) {
+        throw new Error(`❌ Không tìm thấy gameName trong config cho game ID: ${gameId}`);
     }
 
-    console.log(`⏳ Đang đợi vòng mới cho game ${gameTab} (timer = ${gameConfig.timerStart})...`);
+    const gameName = gameConfig.gameName;
+    console.log(`⏳ Đang đợi vòng mới cho game ${gameName} (timer = ${gameConfig.timerStart})...`);
 
     if (page.isClosed()) {
         throw new Error('❌ Trang đã bị đóng.');
     }
 
-    // Tìm timer element
-    const timerLocator = page.locator(`xpath=//div[text()='${gameTab}']//following::div[contains(@class,'in-play')][1]//div[2]/div[1]/div[2]/span[1]`);
+    // Tìm timer element sử dụng gameName thay vì gameTab
+    const timerLocator = page.locator(`xpath=//div[text()='${gameName}']//following::div[contains(@class,'in-play')][1]//div[2]/div[1]/div[2]/span[1]`);
     
     try {
         // Đợi timer element xuất hiện
-        console.log(`🔍 Đợi timer element xuất hiện cho game ${gameTab}...`);
+        console.log(`🔍 Đợi timer element xuất hiện cho game ${gameName}...`);
         await timerLocator.waitFor({ 
             state: 'visible', 
             timeout: 60000
@@ -38,7 +37,7 @@ export async function WaitNewround(page: Page, gameId: number, gameConfig: IGame
     } catch (error) {
         const errorScreenshotPath = `test-results/timer-not-found-${gameId}-${Date.now()}.png`;
         await page.screenshot({ path: errorScreenshotPath });
-        console.error(`❌ Không tìm thấy timer sau 60s cho game ${gameTab}. Screenshot: ${errorScreenshotPath}`);
+        console.error(`❌ Không tìm thấy timer sau 60s cho game ${gameName}. Screenshot: ${errorScreenshotPath}`);
         throw error;
     }
 
@@ -86,7 +85,7 @@ export async function WaitNewround(page: Page, gameId: number, gameConfig: IGame
     // Chụp ảnh nếu timeout
     const errorScreenshotPath = `test-results/round-timeout-${gameId}-${Date.now()}.png`;
     await page.screenshot({ path: errorScreenshotPath });
-    throw new Error(`❌ Không tìm thấy vòng mới sau ${maxTimeout / 1000}s cho game ${gameTab}. Screenshot: ${errorScreenshotPath}`);
+    throw new Error(`❌ Không tìm thấy vòng mới sau ${maxTimeout / 1000}s cho game ${gameName}. Screenshot: ${errorScreenshotPath}`);
 }
 
 export default WaitNewround;
