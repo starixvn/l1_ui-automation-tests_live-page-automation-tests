@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:LivePage": "ts-node runTest.ts"
+    "test:LivePage": "set GAME_ID=22 && ts-node runTest.ts"
   },
   "keywords": [],
   "author": "",

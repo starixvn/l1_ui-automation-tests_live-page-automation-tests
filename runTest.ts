@@ -29,7 +29,8 @@ async function runTest() {
   //console.log('Debugging process.env:', process.env); // Log toàn bộ process.env
   //console.log(`Executing command: npx playwright test ${specFile}`);
 
-  const child = spawn('npx', ['playwright', 'test', specFile], { stdio: 'inherit', shell: true });
+  console.log('🔍 Running tests in debug mode with Playwright Inspector');
+  const child = spawn('npx', ['playwright', 'test', specFile, '--headed', '--debug'], { stdio: 'inherit', shell: true });
 
   child.on('error', (error) => {
     console.error(`❌ Lỗi khi chạy test: ${error.message}`);
