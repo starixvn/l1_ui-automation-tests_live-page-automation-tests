@@ -13,8 +13,8 @@ const envConfig: Record<string, EnvConfig> = {
   },
   PROVG_Credit: {
     baseUrl: 'https://www.nova88.com/',
-    username: 'MemIBCINDOSB52',
-    password: '123456',
+    username: 'MemIBCINDOSB21',
+    password: '1234aa',
   },
   PROVG_Cash: {
     baseUrl: 'https://www.spondemo.com/',

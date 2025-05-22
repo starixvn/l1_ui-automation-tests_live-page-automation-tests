@@ -11,10 +11,7 @@ export const PRO_SG_Locators: IBaseLocator = {
         'tie': "//div[contains(@class,'bet-option-tie')]"
     },
     oddsLocators: {
-        'checkodds': "//div[text()='${gameTab}']//following::div[contains(@class,'c-in-play')][1]/div/div[1]/div[3]",
-        'player': "//div[contains(@class,'odds-player')]//span[@class='odds-value']",
-        'banker': "//div[contains(@class,'odds-banker')]//span[@class='odds-value']",
-        'tie': "//div[contains(@class,'odds-tie')]//span[@class='odds-value']"
+        'checkodds': "//div[text()='${gameTab}']//following::div[contains(@class,'c-in-play')][1]/div/div[1]/div[3]"
     },
     timerLocator: "//div[text()='${gameTab}']//following::div[contains(@class,'in-play')][1]//div[2]/div[1]/div[2]/span[1]",
     gameLoadedLocator: "//div[contains(@class,'game-header')]//div[contains(text(),'Phiên')]",
@@ -28,14 +25,12 @@ export const PRO_SG_Locators: IBaseLocator = {
 // Locators cho môi trường PROVG_Credit
 export const PROVG_Credit_Locators: IBaseLocator = {
     betChoices: {
-        'player': "//div[@id='player-choice']",
-        'banker': "//div[@id='banker-choice']",
-        'tie': "//div[@id='tie-choice']"
+        'player': "(//div[text()='Nhà Con'])[2]",
+        'banker': "(//div[text()='Nhà Cái'])[2]",
+        'tie': "//div[contains(@class,'bet-option-tie')]"
     },
     oddsLocators: {
-        'player': "//div[@id='player-odds']//span[@class='value']",
-        'banker': "//div[@id='banker-odds']//span[@class='value']",
-        'tie': "//div[@id='tie-odds']//span[@class='value']"
+       'checkodds': "//div[text()='${gameTab}']//following::div[contains(@class,'c-in-play')][1]/div/div[1]/div[3]"
     },
     timerLocator: "//div[text()='${gameTab}']//following::div[contains(@class,'in-play')][1]//div[2]/div[1]/div[2]/span[1]",
     gameLoadedLocator: "//div[@id='game-header']//div[contains(text(),'Phiên')]",

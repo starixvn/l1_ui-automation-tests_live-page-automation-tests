@@ -15,16 +15,23 @@ export async function openLivePage(page: Page, env: LiveEnvType) {
 
     // B1: Click vào nút "Trực tiếp"
     await page.getByText('Trực tiếp', { exact: true }).nth(3).click();
-
+    await page.waitForTimeout(60000);
     // B2: Xử lý theo từng môi trường
     switch(env) {
       case 'PRO_SG':
         await page.getByText('SABA.games', { exact: true })
-          .waitFor({ timeout: 120000 });
+          .waitFor({state: 'visible', timeout: 120000 });
         console.log('✅ Đã vào đúng SABA.games');
         break;
 
       case 'PROVG_Credit':
+        await page.getByText('Vgaming', { exact: true }).nth(1)
+        .waitFor({ state: 'visible', timeout: 120000 });
+        const vgElements = await page.locator('text=Vgaming').all();
+       console.log('Số lượng element Vgaming tìm thấy:', vgElements.length); 
+      console.log('✅ Đã vào đúng Vgaming');
+      break;
+
       case 'PROVG_Cash':
         await page.getByText('Vgaming', { exact: true })
           .waitFor({ timeout: 30000 });

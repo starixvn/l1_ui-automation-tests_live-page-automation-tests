@@ -1,0 +1,62 @@
+
+> testing-auto@1.0.0 test:LivePage
+> ts-node runTest.ts -- --env=PRO_SG --gameid=10
+
+Processing key: env=PRO_SG
+Parsed key-value: env=PRO_SG
+Processing key: gameid=10
+Parsed key-value: gameid=10
+Parsed arguments result: { env: 'PRO_SG', gameid: '10' }
+args.gameid: 10
+process.env.GAME_ID: undefined
+Final gameIdFromArgs: 10
+process.env.GAME_ID after assignment: 10
+Mapping gameId 10 to spec file.
+🚀 Đang chạy spec file: LivePage/games/10-Baccarat/smoke-tests/baccarat.spec.ts với GAME_ID=10
+Calling WaitNewround with gameId: 10
+Parsed arguments result: {}
+
+Running 1 test using 1 worker
+
+Parsed arguments result: {}
+
+🎮 Bắt đầu test case: Verify Baccarat Livepage
+🔐 Đăng nhập...
+🌐 Bắt đầu login vào môi trường: PRO_SG
+🔐 Mở modal đăng nhập.
+✅ Login thành công!
+✅ Đăng nhập thành công
+
+🚀 Bắt đầu test game: Cào Baccarat (ID: 10) trên môi trường PRO_SG
+📺 Mở Live Page...
+📺 Đang chuyển vào sảnh Live (PRO_SG)...
+✅ Đã vào đúng SABA.games
+✅ Mở Live Page thành công
+🎮 Đang mở tab game: Cào Baccarat...
+✅ Đã click vào tab game: Cào Baccarat
+✅ Đã thấy đồng hồ Round - Vào game ổn định!
+✅ Mở tab game thành công
+🎲 Kiểm tra tỷ lệ cược...
+✅ Odds của game Cào Baccarat đúng như kỳ vọng: Nhà Con2.00Nhà Cái1.95Hòa9.00Con Đôi12.00Cái Đôi12.00
+✅ Kiểm tra odds thành công
+⏳ Đang đợi vòng mới cho game Cào Baccarat (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Cào Baccarat...
+✅ Vòng mới bắt đầu (timer = 30)
+🎲 Sẽ đặt cược cho choice: player
+💰 Balance trước khi đặt cược: 1655
+🎯 Click vào bet choice player
+🎲 Đã click nút Cược
+⏳ Đợi giao dịch hoàn tất...
+💰 Balance sau khi đặt cược: 1654
+✅ Đặt cược thành công!
+⏳ Đang đợi vòng mới cho game Cào Baccarat (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Cào Baccarat...
+✅ Vòng mới bắt đầu (timer = 30)
+😢 User thua cược
+
+✅ Test game Cào Baccarat hoàn tất thành công!
+
+  ok 1 LivePage\games\10-Baccarat\smoke-tests\baccarat.spec.ts:8:9 › Baccarat Smoke Tests › Verify Baccarat Livepage (1.5m)
+
+  1 passed (1.6m)
+✅ Test chạy thành công!

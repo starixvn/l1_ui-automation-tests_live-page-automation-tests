@@ -1,0 +1,62 @@
+
+> testing-auto@1.0.0 test:LivePage
+> ts-node runTest.ts -- --env=PRO_SG --gameid=55
+
+Processing key: env=PRO_SG
+Parsed key-value: env=PRO_SG
+Processing key: gameid=55
+Parsed key-value: gameid=55
+Parsed arguments result: { env: 'PRO_SG', gameid: '55' }
+args.gameid: 55
+process.env.GAME_ID: undefined
+Final gameIdFromArgs: 55
+process.env.GAME_ID after assignment: 55
+Mapping gameId 55 to spec file.
+🚀 Đang chạy spec file: LivePage/games/55-MonteBigSmall/smoke-tests/montebigsmall.spec.ts với GAME_ID=55
+Calling WaitNewround with gameId: 55
+Parsed arguments result: {}
+
+Running 1 test using 1 worker
+
+Parsed arguments result: {}
+
+🎮 Bắt đầu test case: Verify Baccarat Livepage
+🔐 Đăng nhập...
+🌐 Bắt đầu login vào môi trường: PRO_SG
+🔐 Mở modal đăng nhập.
+✅ Login thành công!
+✅ Đăng nhập thành công
+
+🚀 Bắt đầu test game: Tài Xỉu Monte Carlo (ID: 55) trên môi trường PRO_SG
+📺 Mở Live Page...
+📺 Đang chuyển vào sảnh Live (PRO_SG)...
+✅ Đã vào đúng SABA.games
+✅ Mở Live Page thành công
+🎮 Đang mở tab game: Tài Xỉu...
+✅ Đã click vào tab game: Tài Xỉu
+✅ Đã thấy đồng hồ Round - Vào game ổn định!
+✅ Mở tab game thành công
+🎲 Kiểm tra tỷ lệ cược...
+✅ Odds của game Tài Xỉu Monte Carlo đúng như kỳ vọng: Tài [11 - 18]1.96Xỉu [3 - 10]1.96
+✅ Kiểm tra odds thành công
+⏳ Đang đợi vòng mới cho game Tài Xỉu Monte Carlo (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Tài Xỉu Monte Carlo...
+✅ Vòng mới bắt đầu (timer = 30)
+🎲 Sẽ đặt cược cho choice: big
+💰 Balance trước khi đặt cược: 1644
+🎯 Click vào bet choice big
+🎲 Đã click nút Cược
+⏳ Đợi giao dịch hoàn tất...
+💰 Balance sau khi đặt cược: 1643
+✅ Đặt cược thành công!
+⏳ Đang đợi vòng mới cho game Tài Xỉu Monte Carlo (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Tài Xỉu Monte Carlo...
+✅ Vòng mới bắt đầu (timer = 30)
+🎉 User thắng cược! Số tiền thắng: 1.96
+
+✅ Test game Tài Xỉu Monte Carlo hoàn tất thành công!
+
+  ok 1 LivePage\games\55-MonteBigSmall\smoke-tests\montebigsmall.spec.ts:8:9 › Baccarat Smoke Tests › Verify Baccarat Livepage (1.3m)
+
+  1 passed (1.3m)
+✅ Test chạy thành công!

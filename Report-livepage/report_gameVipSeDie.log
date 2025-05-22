@@ -1,0 +1,62 @@
+
+> testing-auto@1.0.0 test:LivePage
+> ts-node runTest.ts -- --env=PRO_SG --gameid=22
+
+Processing key: env=PRO_SG
+Parsed key-value: env=PRO_SG
+Processing key: gameid=22
+Parsed key-value: gameid=22
+Parsed arguments result: { env: 'PRO_SG', gameid: '22' }
+args.gameid: 22
+process.env.GAME_ID: undefined
+Final gameIdFromArgs: 22
+process.env.GAME_ID after assignment: 22
+Mapping gameId 22 to spec file.
+🚀 Đang chạy spec file: LivePage/games/22-VipSeDie/smoke-tests/vipsedie.spec.ts với GAME_ID=22
+Calling WaitNewround with gameId: 22
+Parsed arguments result: {}
+
+Running 1 test using 1 worker
+
+Parsed arguments result: {}
+
+🎮 Bắt đầu test case: Verify VipSeDie Livepage
+🔐 Đăng nhập...
+🌐 Bắt đầu login vào môi trường: PRO_SG
+🔐 Mở modal đăng nhập.
+✅ Login thành công!
+✅ Đăng nhập thành công
+
+🚀 Bắt đầu test game: Xóc Đĩa VIP (ID: 22) trên môi trường PRO_SG
+📺 Mở Live Page...
+📺 Đang chuyển vào sảnh Live (PRO_SG)...
+✅ Đã vào đúng SABA.games
+✅ Mở Live Page thành công
+🎮 Đang mở tab game: Xóc Đĩa VIP...
+✅ Đã click vào tab game: Xóc Đĩa VIP
+✅ Đã thấy đồng hồ Round - Vào game ổn định!
+✅ Mở tab game thành công
+🎲 Kiểm tra tỷ lệ cược...
+✅ Odds của game Xóc Đĩa VIP đúng như kỳ vọng: Lẻ1.96Chẵn1.9614.403.752.4014.403.75
+✅ Kiểm tra odds thành công
+⏳ Đang đợi vòng mới cho game Xóc Đĩa VIP (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Xóc Đĩa VIP...
+✅ Vòng mới bắt đầu (timer = 30)
+🎲 Sẽ đặt cược cho choice: odd
+💰 Balance trước khi đặt cược: 1654
+🎯 Click vào bet choice odd
+🎲 Đã click nút Cược
+⏳ Đợi giao dịch hoàn tất...
+💰 Balance sau khi đặt cược: 1644
+✅ Đặt cược thành công!
+⏳ Đang đợi vòng mới cho game Xóc Đĩa VIP (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Xóc Đĩa VIP...
+✅ Vòng mới bắt đầu (timer = 30)
+😢 User thua cược
+
+✅ Test game Xóc Đĩa VIP hoàn tất thành công!
+
+  ok 1 LivePage\games\22-VipSeDie\smoke-tests\vipsedie.spec.ts:8:9 › VipSeDie Smoke Tests › Verify VipSeDie Livepage (1.6m)
+
+  1 passed (1.6m)
+✅ Test chạy thành công!

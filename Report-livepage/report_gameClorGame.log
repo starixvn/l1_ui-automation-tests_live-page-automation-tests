@@ -1,0 +1,62 @@
+
+> testing-auto@1.0.0 test:LivePage
+> ts-node runTest.ts -- --env=PRO_SG --gameid=71
+
+Processing key: env=PRO_SG
+Parsed key-value: env=PRO_SG
+Processing key: gameid=71
+Parsed key-value: gameid=71
+Parsed arguments result: { env: 'PRO_SG', gameid: '71' }
+args.gameid: 71
+process.env.GAME_ID: undefined
+Final gameIdFromArgs: 71
+process.env.GAME_ID after assignment: 71
+Mapping gameId 71 to spec file.
+🚀 Đang chạy spec file: LivePage/games/71-ColorGame/smoke-tests/colorgame.spec.ts với GAME_ID=71
+Calling WaitNewround with gameId: 71
+Parsed arguments result: {}
+
+Running 1 test using 1 worker
+
+Parsed arguments result: {}
+
+🎮 Bắt đầu test case: Verify Color Game Livepage
+🔐 Đăng nhập...
+🌐 Bắt đầu login vào môi trường: PRO_SG
+🔐 Mở modal đăng nhập.
+✅ Login thành công!
+✅ Đăng nhập thành công
+
+🚀 Bắt đầu test game: Xí Ngầu Lục Sắc (ID: 71) trên môi trường PRO_SG
+📺 Mở Live Page...
+📺 Đang chuyển vào sảnh Live (PRO_SG)...
+✅ Đã vào đúng SABA.games
+✅ Mở Live Page thành công
+🎮 Đang mở tab game: Xí Ngầu Lục Sắc...
+✅ Đã click vào tab game: Xí Ngầu Lục Sắc
+✅ Đã thấy đồng hồ Round - Vào game ổn định!
+✅ Mở tab game thành công
+🎲 Kiểm tra tỷ lệ cược...
+✅ Odds của game Xí Ngầu Lục Sắc đúng như kỳ vọng: 2.002.002.002.002.002.00
+✅ Kiểm tra odds thành công
+⏳ Đang đợi vòng mới cho game Xí Ngầu Lục Sắc (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Xí Ngầu Lục Sắc...
+✅ Vòng mới bắt đầu (timer = 30)
+🎲 Sẽ đặt cược cho choice: yellow
+💰 Balance trước khi đặt cược: 1645
+🎯 Click vào bet choice yellow
+🎲 Đã click nút Cược
+⏳ Đợi giao dịch hoàn tất...
+💰 Balance sau khi đặt cược: 1644
+✅ Đặt cược thành công!
+⏳ Đang đợi vòng mới cho game Xí Ngầu Lục Sắc (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Xí Ngầu Lục Sắc...
+✅ Vòng mới bắt đầu (timer = 30)
+😢 User thua cược
+
+✅ Test game Xí Ngầu Lục Sắc hoàn tất thành công!
+
+  ok 1 LivePage\games\71-ColorGame\smoke-tests\colorgame.spec.ts:9:9 › Color Game Smoke Tests › Verify Color Game Livepage (1.9m)
+
+  1 passed (2.0m)
+✅ Test chạy thành công!

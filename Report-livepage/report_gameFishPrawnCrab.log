@@ -1,0 +1,62 @@
+
+> testing-auto@1.0.0 test:LivePage
+> ts-node runTest.ts -- --env=PRO_SG --gameid=3
+
+Processing key: env=PRO_SG
+Parsed key-value: env=PRO_SG
+Processing key: gameid=3
+Parsed key-value: gameid=3
+Parsed arguments result: { env: 'PRO_SG', gameid: '3' }
+args.gameid: 3
+process.env.GAME_ID: undefined
+Final gameIdFromArgs: 3
+process.env.GAME_ID after assignment: 3
+Mapping gameId 3 to spec file.
+🚀 Đang chạy spec file: LivePage/games/3-FishPrawnCrab/smoke-tests/fishprawncrab.spec.ts với GAME_ID=3
+Calling WaitNewround with gameId: 3
+Parsed arguments result: {}
+
+Running 1 test using 1 worker
+
+Parsed arguments result: {}
+
+🎮 Bắt đầu test case: Verify Fish Prawn Crab Livepage
+🔐 Đăng nhập...
+🌐 Bắt đầu login vào môi trường: PRO_SG
+🔐 Mở modal đăng nhập.
+✅ Login thành công!
+✅ Đăng nhập thành công
+
+🚀 Bắt đầu test game: Bầu Cua (ID: 3) trên môi trường PRO_SG
+📺 Mở Live Page...
+📺 Đang chuyển vào sảnh Live (PRO_SG)...
+✅ Đã vào đúng SABA.games
+✅ Mở Live Page thành công
+🎮 Đang mở tab game: Bầu Cua...
+✅ Đã click vào tab game: Bầu Cua
+✅ Đã thấy đồng hồ Round - Vào game ổn định!
+✅ Mở tab game thành công
+🎲 Kiểm tra tỷ lệ cược...
+✅ Odds của game Bầu Cua đúng như kỳ vọng: 2.002.002.002.002.002.00
+✅ Kiểm tra odds thành công
+⏳ Đang đợi vòng mới cho game Bầu Cua (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Bầu Cua...
+✅ Vòng mới bắt đầu (timer = 30)
+🎲 Sẽ đặt cược cho choice: stag
+💰 Balance trước khi đặt cược: 1656
+🎯 Click vào bet choice stag
+🎲 Đã click nút Cược
+⏳ Đợi giao dịch hoàn tất...
+💰 Balance sau khi đặt cược: 1655
+✅ Đặt cược thành công!
+⏳ Đang đợi vòng mới cho game Bầu Cua (timer = 30)...
+🔍 Đợi timer element xuất hiện cho game Bầu Cua...
+✅ Vòng mới bắt đầu (timer = 30)
+😢 User thua cược
+
+✅ Test game Bầu Cua hoàn tất thành công!
+
+  ok 1 LivePage\games\3-FishPrawnCrab\smoke-tests\fishprawncrab.spec.ts:9:9 › Fish Prawn Crab Smoke Tests › Verify Fish Prawn Crab Livepage (1.7m)
+
+  1 passed (1.8m)
+✅ Test chạy thành công!

@@ -40,12 +40,12 @@ export async function Login(headless = true): Promise<{
         console.log('🔐 Mở modal đăng nhập.');
         await page.getByRole('textbox', { name: 'Username' }).click();
         await page.getByRole('textbox', { name: 'Username' }).click();
-        await page.getByRole('textbox', { name: 'Username' }).fill('MemIBCINDOSB52');
+        await page.getByRole('textbox', { name: 'Username' }).fill(config.username);
         await page.getByRole('textbox', { name: 'Password' }).click();
-        await page.getByRole('textbox', { name: 'Password' }).fill('123456');
+        await page.getByRole('textbox', { name: 'Password' }).fill(config.password);
         await page.locator('a').filter({ hasText: 'Login' }).nth(1).click();
-        await page.goto('https://d.nova88.com/Sports/');
-        await page.getByText('Live', { exact: true }).nth(2).click();
+        //await page.goto('https://d.nova88.com/Sports/');
+       // await page.getByText('Live', { exact: true }).nth(2).click();
     }
   
     else if (ENV === 'PROVG_Cash') {

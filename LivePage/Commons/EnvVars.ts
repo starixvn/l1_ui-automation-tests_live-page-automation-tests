@@ -2,5 +2,5 @@ import parseArgs from "../Utils/parseArgs";
 
 const args = parseArgs();
 
-export const ENV = (args.env || 'PRO_SG').toUpperCase();
-export const GAME_ID = Number(args.gameid || 22);
+export const ENV = process.env.TEST_ENV || args.env || 'PRO_SG';
+export const GAME_ID = Number(process.env.GAME_ID || args.gameid || 22);
