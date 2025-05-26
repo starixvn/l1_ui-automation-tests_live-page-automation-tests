@@ -4,7 +4,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:LivePage": "set GAME_ID=22 && ts-node runTest.ts"
+    "test:LivePage": "ts-node runTest.ts",
+    "dev:LivePage": "ts-node runTest.ts --env=PRO_SG --gameid=80 --headed=true",
+    "test:with-allure": "playwright test",
+    "report:allure": "allure generate allure-results -o allure-report --clean",
+    "report:open": "allure open allure-report",
+    "report:upload": "ts-node scripts/upload-allure.ts"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +18,11 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
+    "@types/adm-zip": "^0.5.7",
     "@types/minimist": "^1.2.5",
     "@types/node": "^22.14.1",
+    "adm-zip": "^0.5.16",
+    "allure-playwright": "^2.14.1",
     "cross-env": "^7.0.3",
     "playwright": "^1.52.0",
     "ts-node": "^10.9.2",

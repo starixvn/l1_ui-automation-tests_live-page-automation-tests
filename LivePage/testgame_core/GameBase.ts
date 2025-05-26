@@ -25,44 +25,44 @@ export class GameBase {
             this.gameConfig = gameConfig;
             this.locators = locators;
 
-            console.log(`\n🚀 Bắt đầu test game: ${gameConfig.gameName} (ID: ${gameConfig.gameId}) trên môi trường ${gameConfig.env}`);
+            console.log(`\n🚀 Start testing game: ${gameConfig.gameName} (ID: ${gameConfig.gameId}) on environment ${gameConfig.env}`);
             
             // Mở Live Page
-            console.log('📺 Mở Live Page...');
+            console.log('📺 Opening Live Page...');
             await openLivePage(this.page, gameConfig.env as LiveEnvType);
-            console.log('✅ Mở Live Page thành công');
+            console.log('✅ Opened Live Page successfully');
             
             // Mở tab game (nếu không skip)
             if (!options.skipOpenGameTab) {
-               // console.log(`🎮 Mở tab game ${gameConfig.gameName}...`);
+               // console.log(`🎮 Opening game tab ${gameConfig.gameName}...`);
                 await OpenGameTab(this.page, gameConfig.gameId);
-                console.log('✅ Mở tab game thành công');
+                console.log('✅ Opened game tab successfully');
             }
             
             // Kiểm tra odds
-            console.log('🎲 Kiểm tra tỷ lệ cược...');
+            console.log('🎲 Checking odds...');
             await checkOdds(this.page, gameConfig.gameId, locators, gameConfig);
-            console.log('✅ Kiểm tra odds thành công');
+            console.log('✅ Checked odds successfully');
             
             // Đợi round mới
-           // console.log('⏳ Đợi round mới...');
+           // console.log('⏳ Waiting for new round...');
             await WaitNewround(this.page, gameConfig.gameId, gameConfig);
-           // console.log('✅ Đã tìm thấy round mới');
+           // console.log('✅ Found new round');
 
             // Đặt cược cho bet choice đầu tiên của game
             const firstBetChoice = gameConfig.choices[0];
-            //console.log(`💰 Thử đặt cược cho lựa chọn đầu tiên: ${firstBetChoice}...`);
+            //console.log(`💰 Trying to place bet for the first choice: ${firstBetChoice}...`);
             try {
                 await this.placeBet(firstBetChoice);
-               // console.log(`✅ Đặt cược thành công cho lựa chọn: ${firstBetChoice}`);
+               // console.log(`✅ Placed bet successfully for choice: ${firstBetChoice}`);
             } catch (error: any) {
-                console.error(`❌ Lỗi khi đặt cược ${firstBetChoice}:`, error.message);
+                console.error(`❌ Error placing bet for ${firstBetChoice}:`, error.message);
                 throw error;
             }
 
-            console.log(`\n✅ Test game ${gameConfig.gameName} hoàn tất thành công!\n`);
+            console.log(`\n✅ Test for game ${gameConfig.gameName} completed successfully!\n`);
         } catch (error: any) {
-            console.error(`\n❌ Lỗi test game ${gameConfig.gameName}:`, error.message);
+            console.error(`\n❌ Error testing game ${gameConfig.gameName}:`, error.message);
             throw error;
         }
     }

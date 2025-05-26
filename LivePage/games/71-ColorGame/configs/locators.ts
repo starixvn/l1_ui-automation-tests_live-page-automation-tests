@@ -76,6 +76,6 @@ export const getColorGameLocators: LocatorFactory = (env: string): IBaseLocator 
         case 'PROVG_Cash':
             return PROVG_Cash_Locators;
         default:
-            throw new Error(`Không tìm thấy locators cho môi trường: ${env}`);
+            throw new Error(`Locators not found for environment: ${env}`);
     }
 };

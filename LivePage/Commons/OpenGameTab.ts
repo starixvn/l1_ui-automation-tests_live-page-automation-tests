@@ -5,12 +5,12 @@ export async function OpenGameTab(page: Page, gameId: number) {
     try {
         const gameTab = gameIdToTabName[gameId];
         if (!gameTab) {
-            throw new Error(`Không tìm thấy tab cho game ID: ${gameId}`);
+            throw new Error(`Game tab not found for game ID: ${gameId}`);
         }
 
-        console.log(`🎮 Đang mở tab game: ${gameTab}...`);
+        console.log(`🎮 Opening game tab: ${gameTab}...`);
 
-        // Tìm tab game với các locator khác nhau
+        // Find game tab with different locators
         const tabLocators = [
             page.getByText(gameTab, { exact: true }),
             page.getByText(gameTab, { exact: false }),
@@ -24,47 +24,45 @@ export async function OpenGameTab(page: Page, gameId: number) {
 
         while (retryCount < maxRetries) {
             try {
-                // Thử từng locator cho đến khi tìm thấy
+                // Try each locator until one is found
                 for (const locator of tabLocators) {
                     try {
-                        // Kiểm tra xem locator có tồn tại và visible không
+                        // Check if locator exists and is visible
                         const isVisible = await locator.isVisible({ timeout: 5000 });
                         if (isVisible) {
-                            // Click vào tab
                             await locator.click({ timeout: 10000 });
-                            console.log(`✅ Đã click vào tab game: ${gameTab}`);
+                            console.log(`✅ Successfully clicked game tab: ${gameTab}`);
 
-                            // Đợi element "Phiên" xuất hiện để xác nhận đã vào game
+                            // Wait for "Round" element to appear to confirm game entry
                             await page.locator('text=Phiên').first().waitFor({ 
                                 state: 'visible', 
                                 timeout: 15000 
                             });
 
-                            console.log('✅ Đã thấy đồng hồ Round - Vào game ổn định!');
+                            console.log('✅ Round timer visible - Game loaded successfully!');
                             return;
                         }
                     } catch {
-                        continue; // Thử locator tiếp theo nếu locator hiện tại fail
+                        continue; // Try next locator if current one fails
                     }
                 }
 
-                // Nếu không tìm thấy tab với bất kỳ locator nào
-                throw new Error('Không tìm thấy tab game với các locator đã thử');
+                throw new Error('Game tab not found with any of the tried locators');
 
             } catch (error) {
                 lastError = error;
                 retryCount++;
                 if (retryCount < maxRetries) {
-                    console.log(`Lần thử ${retryCount}/${maxRetries} thất bại, đang thử lại...`);
+                    console.log(`Attempt ${retryCount}/${maxRetries} failed, retrying...`);
                     await page.waitForTimeout(2000);
                 }
             }
         }
 
-        throw new Error(`Không thể mở tab game sau ${maxRetries} lần thử. Lỗi cuối cùng: ${lastError?.message}`);
+        throw new Error(`Could not open game tab after ${maxRetries} attempts. Last error: ${lastError?.message}`);
 
     } catch (error: any) {
-        console.error('Chi tiết lỗi:', error);
+        console.error('Error details:', error);
         throw error;
     }
 }

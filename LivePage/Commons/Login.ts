@@ -12,40 +12,38 @@ export async function Login(headless = true): Promise<{
     //const env = process.env.TEST_ENV || 'PRO_SG';
     const config = envConfig[ENV];
   
-    if (!config) throw new Error(`❌ Không tìm thấy cấu hình cho TEST_ENV = "${ENV}"`);
+    if (!config) throw new Error(`❌ Configuration not found for TEST_ENV = "${ENV}"`);
   
-    console.log(`🌐 Bắt đầu login vào môi trường: ${ENV}`);
+    console.log(`🌐 Starting login to environment: ${ENV}`);
     const { browser, context, page } = await launchBrowser(headless);
     await page.goto(config.baseUrl, { waitUntil: 'load' });
   
-    // 👉 Flow riêng cho từng nhóm
+    // 👉 Specific flow for each group
     if (ENV === 'PRO_SG') {
-      // ✅ B1: Nếu popup cảnh báo xuất hiện → close it
-  const warningPopup = page.locator('text=kiểm tra địa chỉ các trang web'); // hoặc selector khác chính xác hơn
-  await page.locator('div:nth-child(10) > .modal__dialog > .modal__close > .btn').click();
-  // ✅ B2: Bấm Đăng nhập
-  await page.locator('a').filter({ hasText: 'Đăng nhập' }).first().click();
-  console.log('🔐 Mở modal đăng nhập.');
-  // ✅ B3: Nhập thông tin
-  await page.getByRole('textbox', { name: 'Tên Truy Cập' }).click();
-  await page.getByRole('textbox', { name: 'Tên Truy Cập' }).fill(config.username);
-  await page.getByRole('textbox', { name: 'Mật Khẩu' }).click();
-  await page.getByRole('textbox', { name: 'Mật Khẩu' }).fill(config.password);
-  await page.locator('a').filter({ hasText: 'Đăng nhập' }).nth(1).click();
+      // ✅ Step 1: If warning popup appears → close it
+      const warningPopup = page.locator('text=kiểm tra địa chỉ các trang web'); // or other more precise selector
+      await page.locator('div:nth-child(10) > .modal__dialog > .modal__close > .btn').click();
+      // ✅ Step 2: Click Login
+      await page.locator('a').filter({ hasText: 'Đăng nhập' }).first().click();
+      console.log('🔐 Opening login modal.');
+      // ✅ Step 3: Enter credentials
+      await page.getByRole('textbox', { name: 'Tên Truy Cập' }).click();
+      await page.getByRole('textbox', { name: 'Tên Truy Cập' }).fill(config.username);
+      await page.getByRole('textbox', { name: 'Mật Khẩu' }).click();
+      await page.getByRole('textbox', { name: 'Mật Khẩu' }).fill(config.password);
+      await page.locator('a').filter({ hasText: 'Đăng nhập' }).nth(1).click();
     }
   
     else if (ENV === 'PROVG_Credit') {
-        console.log('🔐 Mở modal đăng nhập.');
-        await page.locator('a').filter({ hasText: 'Login' }).first().click();
-        console.log('🔐 Mở modal đăng nhập.');
-        await page.getByRole('textbox', { name: 'Username' }).click();
-        await page.getByRole('textbox', { name: 'Username' }).click();
-        await page.getByRole('textbox', { name: 'Username' }).fill(config.username);
-        await page.getByRole('textbox', { name: 'Password' }).click();
-        await page.getByRole('textbox', { name: 'Password' }).fill(config.password);
-        await page.locator('a').filter({ hasText: 'Login' }).nth(1).click();
-        //await page.goto('https://d.nova88.com/Sports/');
-       // await page.getByText('Live', { exact: true }).nth(2).click();
+      console.log('🔐 Opening login modal.');
+      await page.locator('a').filter({ hasText: 'Login' }).first().click();
+      console.log('🔐 Opening login modal.');
+      await page.getByRole('textbox', { name: 'Username' }).click();
+      await page.getByRole('textbox', { name: 'Username' }).click();
+      await page.getByRole('textbox', { name: 'Username' }).fill(config.username);
+      await page.getByRole('textbox', { name: 'Password' }).click();
+      await page.getByRole('textbox', { name: 'Password' }).fill(config.password);
+      await page.locator('a').filter({ hasText: 'Login' }).nth(1).click();
     }
   
     else if (ENV === 'PROVG_Cash') {
@@ -55,17 +53,17 @@ export async function Login(headless = true): Promise<{
     }
   
     else {
-      throw new Error(`🛑 Chưa hỗ trợ login cho môi trường: ${ENV}`);
+      throw new Error(`🛑 Login not supported for environment: ${ENV}`);
     }
   
-    // 📸 Screenshot + xác nhận login
+    // 📸 Screenshot + login confirmation
     await page.waitForSelector('.c-text', { state: 'visible' });
    /* await page.screenshot({
       path: `testlivepage/snapshots/login-success-${env}.png`,
       fullPage: true,
     });*/
   
-    console.log('✅ Login thành công!');
+    console.log('✅ Login successful!');
     return { browser, context, page };
   };
   export default Login;

@@ -1,5 +1,5 @@
 export function getSpecFileByGameId(gameId: number): string {
-  console.log(`Mapping gameId ${gameId} to spec file.`); // Log gameId mà không gọi lại hàm
+  console.log(`Mapping gameId ${gameId} to spec file.`);
   if (gameId === 2) {
     return 'LivePage/games/2-SeDie/smoke-tests/sedie.spec.ts';
   }
@@ -21,5 +21,5 @@ export function getSpecFileByGameId(gameId: number): string {
   if (gameId === 80) {
     return 'LivePage/games/80-CoinToss/smoke-tests/cointoss.spec.ts';
   }
-  throw new Error(`Không tìm thấy spec file cho GAME_ID = ${gameId}`);
+  throw new Error(`Spec file not found for GAME_ID = ${gameId}`);
 }

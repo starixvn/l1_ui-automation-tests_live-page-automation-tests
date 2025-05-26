@@ -1,0 +1,24 @@
+image: hub.lumigame.com/base/playwright:v1.44.0-focal
+
+variables:
+  NODE_VERSION: "18"
+  TEST_ENV: "PRO_SG"
+  GAME_ID: "22"
+
+stages:
+  - test
+
+scheduled-test-job:
+  stage: test
+  script:
+    - npm ci
+    - npx playwright install chromium
+    - npm run test:LivePage -- --env=$TEST_ENV --gameid=$GAME_ID
+    - npm run report:upload
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+      - playwright-report/
+    expire_in: 7 days
+  when: manual 
