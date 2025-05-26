@@ -19,7 +19,7 @@ export class BrowserSession {
     public async initialize() {
         if (!this.browser || !this.context || !this.page) {
             console.log('🔄 Khởi tạo browser session mới...');
-            const { browser, context, page } = await Login(true);
+            const { browser, context, page } = await Login();
             this.browser = browser;
             this.context = context;
             this.page = page;

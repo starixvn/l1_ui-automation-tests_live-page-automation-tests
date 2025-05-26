@@ -4,7 +4,7 @@ import launchBrowser from "./browserHelper";
 import { promises } from "dns";
 import { ENV, GAME_ID } from './EnvVars';
 
-export async function Login(headless = true): Promise<{
+export async function Login(): Promise<{
     browser: Browser;
     context: BrowserContext;
     page: Page;
@@ -15,7 +15,7 @@ export async function Login(headless = true): Promise<{
     if (!config) throw new Error(`❌ Configuration not found for TEST_ENV = "${ENV}"`);
   
     console.log(`🌐 Starting login to environment: ${ENV}`);
-    const { browser, context, page } = await launchBrowser(headless);
+    const { browser, context, page } = await launchBrowser();
     await page.goto(config.baseUrl, { waitUntil: 'load' });
   
     // 👉 Specific flow for each group

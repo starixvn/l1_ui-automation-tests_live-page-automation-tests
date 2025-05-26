@@ -23,7 +23,11 @@ export default defineConfig({
   projects: [
     {
       name: 'Smoke_Live_Page',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        headless: true,
+        channel: 'chrome'
+      },
     },
   ],
 }); 
