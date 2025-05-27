@@ -2,16 +2,26 @@ image: hub.lumigame.com/pentagon-base/live-page-automation-test-base:latest
 
 variables:
   TEST_ENV: "PRO_SG"
-  GAME_ID: "22"
+  GAME_ID: "0"
 
 stages:
   - test
+
+.run_test: &run_test |
+  if [ "$GAME_ID" = "0" ]; then
+    for game in 80 71 22 55 10 3 2; do
+      echo "Running tests for game $game"
+      npm run test:LivePage -- --env=$TEST_ENV --gameid=$game
+    done
+  else
+    npm run test:LivePage -- --env=$TEST_ENV --gameid=$GAME_ID
+  fi
 
 scheduled-test-job:
   stage: test
   script:
     - npm ci
-    - npm run test:LivePage -- --env=$TEST_ENV --gameid=$GAME_ID
+    - *run_test
     - npm run report:upload
   artifacts:
     when: always

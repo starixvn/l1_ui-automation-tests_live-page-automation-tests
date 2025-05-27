@@ -12,51 +12,37 @@ process.env.GAME_ID: undefined
 Final gameIdFromArgs: 2
 process.env.GAME_ID after assignment: 2
 Mapping gameId 2 to spec file.
-🚀 Đang chạy spec file: LivePage/games/2-SeDie/smoke-tests/sedie.spec.ts với GAME_ID=2
+🚀 Running spec file: LivePage/games/2-SeDie/smoke-tests/sedie.spec.ts with GAME_ID=2
 Calling WaitNewround with gameId: 2
+🔍 Running tests in headless mode
+Playwright arguments: playwright test LivePage/games/2-SeDie/smoke-tests/sedie.spec.ts
 Parsed arguments result: {}
 
 Running 1 test using 1 worker
 
-Parsed arguments result: {}
+[1A[2KParsed arguments result: {}
 
-🎮 Bắt đầu test case: Verify SeDie Livepage
-🔐 Đăng nhập...
-🌐 Bắt đầu login vào môi trường: PRO_SG
-🔐 Mở modal đăng nhập.
-✅ Login thành công!
-✅ Đăng nhập thành công
+[1A[2K[1/1] [Smoke_Live_Page] › LivePage\games\2-SeDie\smoke-tests\sedie.spec.ts:9:9 › SeDie Smoke Tests › Verify SeDie Livepage
+[1A[2K[Smoke_Live_Page] › LivePage\games\2-SeDie\smoke-tests\sedie.spec.ts:9:9 › SeDie Smoke Tests › Verify SeDie Livepage
 
-🚀 Bắt đầu test game: Xóc Đĩa (ID: 2) trên môi trường PRO_SG
-📺 Mở Live Page...
-📺 Đang chuyển vào sảnh Live (PRO_SG)...
-✅ Đã vào đúng SABA.games
-✅ Mở Live Page thành công
-🎮 Đang mở tab game: Xóc Đĩa...
-✅ Đã click vào tab game: Xóc Đĩa
-✅ Đã thấy đồng hồ Round - Vào game ổn định!
-✅ Mở tab game thành công
-🎲 Kiểm tra tỷ lệ cược...
-✅ Odds của game Xóc Đĩa đúng như kỳ vọng: Lẻ1.96Chẵn1.9614.403.752.4014.403.75
-✅ Kiểm tra odds thành công
-⏳ Đang đợi vòng mới cho game Xóc Đĩa (timer = 30)...
-🔍 Đợi timer element xuất hiện cho game Xóc Đĩa...
-✅ Vòng mới bắt đầu (timer = 30)
-🎲 Sẽ đặt cược cho choice: odd
-💰 Balance trước khi đặt cược: 1655
-🎯 Click vào bet choice odd
-🎲 Đã click nút Cược
-⏳ Đợi giao dịch hoàn tất...
-💰 Balance sau khi đặt cược: 1654
-✅ Đặt cược thành công!
-⏳ Đang đợi vòng mới cho game Xóc Đĩa (timer = 30)...
-🔍 Đợi timer element xuất hiện cho game Xóc Đĩa...
-✅ Vòng mới bắt đầu (timer = 30)
-🎉 User thắng cược! Số tiền thắng: 1.96
+🎮 Starting test case: Verify SeDie Livepage
 
-✅ Test game Xóc Đĩa hoàn tất thành công!
+[1A[2K🔐 Logging in...
 
-  ok 1 LivePage\games\2-SeDie\smoke-tests\sedie.spec.ts:9:9 › SeDie Smoke Tests › Verify SeDie Livepage (1.3m)
+[1A[2K🌐 Starting login to environment: PRO_SG
 
-  1 passed (1.3m)
-✅ Test chạy thành công!
+[1A[2K🔐 Opening login modal.
+
+[1A[2K✅ Login successful!
+
+[1A[2K✅ Login successful
+
+[1A[2K
+🚀 Start testing game: Xóc Đĩa (ID: 2) on environment PRO_SG
+
+[1A[2K📺 Opening Live Page...
+
+[1A[2K📺 Switching to Live lobby (PRO_SG)...
+
+Terminate batch job (Y/N)? 
+^C[1A[2K  1 did not run
