@@ -1,7 +1,6 @@
-image: hub.lumigame.com/base/playwright:v1.44.0-focal
+image: hub.lumigame.com/pentagon-base/live-page-automation-test-base:latest
 
 variables:
-  NODE_VERSION: "18"
   TEST_ENV: "PRO_SG"
   GAME_ID: "22"
 
@@ -12,7 +11,6 @@ scheduled-test-job:
   stage: test
   script:
     - npm ci
-    - npx playwright install chrome
     - npm run test:LivePage -- --env=$TEST_ENV --gameid=$GAME_ID
     - npm run report:upload
   artifacts:
