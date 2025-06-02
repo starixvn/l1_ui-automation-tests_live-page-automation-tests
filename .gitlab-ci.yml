@@ -14,6 +14,8 @@ stages:
       npm run test:LivePage -- --env=$TEST_ENV --gameid=$game
       npm run report:upload
       rm -rf allure-results/*
+      echo "Contents of allure-results after cleanup:"
+      ls -la allure-results/
     done
   else
     npm run test:LivePage -- --env=$TEST_ENV --gameid=$GAME_ID
