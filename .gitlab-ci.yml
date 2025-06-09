@@ -33,4 +33,3 @@ scheduled-test-job:
       - allure-results/
       - playwright-report/
     expire_in: 7 days
-  when: manual 
