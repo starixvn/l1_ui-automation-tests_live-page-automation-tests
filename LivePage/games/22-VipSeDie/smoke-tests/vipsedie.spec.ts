@@ -16,6 +16,6 @@ test.describe('VipSeDie Smoke Tests', () => {
         const locators = getVipSeDieLocators(env);
 
         // Chạy test với config và locators đã được setup, skip OpenGameTab
-        await gameBase.runTest(gameConfig, locators);
+        await gameBase.runTest(gameConfig, locators, { skipOpenGameTab: true });
     });
 });

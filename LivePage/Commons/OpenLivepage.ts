@@ -14,7 +14,7 @@ export async function openLivePage(page: Page, env: LiveEnvType) {
     await page.waitForLoadState('domcontentloaded');
 
     // Step 1: Click on "Live" button
-    await page.getByText('Trực tiếp', { exact: true }).nth(3).click();
+    await page.getByText('Trực tiếp', { exact: true }).nth(2).click();
     await page.waitForTimeout(60000);
     // Step 2: Handle based on environment
     switch(env) {

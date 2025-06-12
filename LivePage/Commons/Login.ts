@@ -22,7 +22,7 @@ export async function Login(): Promise<{
     if (ENV === 'PRO_SG') {
       // ✅ Step 1: If warning popup appears → close it
       const warningPopup = page.locator('text=kiểm tra địa chỉ các trang web'); // or other more precise selector
-      await page.locator('div:nth-child(10) > .modal__dialog > .modal__close > .btn').click();
+      await page.locator('div:nth-child(11) > .modal__dialog > .modal__close > .btn').click();
       // ✅ Step 2: Click Login
       await page.locator('a').filter({ hasText: 'Đăng nhập' }).first().click();
       console.log('🔐 Opening login modal.');
@@ -62,7 +62,8 @@ export async function Login(): Promise<{
       path: `testlivepage/snapshots/login-success-${env}.png`,
       fullPage: true,
     });*/
-  
+  //Close new popup
+  await page.locator('#popupPanel a').click();
     console.log('✅ Login successful!');
     return { browser, context, page };
   };

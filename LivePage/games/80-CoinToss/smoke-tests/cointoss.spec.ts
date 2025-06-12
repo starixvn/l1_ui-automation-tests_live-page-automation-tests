@@ -16,7 +16,7 @@ test.describe('Baccarat Smoke Tests', () => {
         const locators = getCoinTossLocators(env);
 
         // Chạy test với config và locators đã được setup
-        await gameBase.runTest(gameConfig, locators, { skipOpenGameTab: true });
+        await gameBase.runTest(gameConfig, locators);
     } catch (error: any) {
         console.error('❌ Lỗi trong test:', error.message);
         throw error;
