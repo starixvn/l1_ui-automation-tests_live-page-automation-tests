@@ -17,7 +17,7 @@ export const test = base.extend<LivePageFixtures>({
         try {
             // Login and get initialized page
             console.log('🔐 Logging in...');
-            const loginResult = await Login(false);
+            const loginResult = await Login(true);
             page = loginResult.page;
 
             // Increase timeout for page operations
