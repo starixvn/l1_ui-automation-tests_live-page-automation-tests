@@ -63,7 +63,8 @@ export async function Login(): Promise<{
       path: `testlivepage/snapshots/login-success-${env}.png`,
       fullPage: true,
     });*/
-    
+    // close new popup
+    await page.locator('#popupPanel a').click();
     console.log('✅ Login successful!');
     return { browser, context, page };
   };
