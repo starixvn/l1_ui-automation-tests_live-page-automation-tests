@@ -9,14 +9,17 @@ import WaitNewround from './WaitNewround';
  * @param betChoice - Lựa chọn đặt cược (từ gameConfig.choices)
  * @param gameConfig - Config của game
  * @param locator - Đối tượng chứa các locator của game
+ * @param waitNewRoundFn - Hàm chờ vòng mới (tùy chọn, dùng cho game đặc thù)
  * @returns Promise<void>
  */
 export async function placeBet(
     page: Page,
     betChoice: string | undefined,
     gameConfig: IGameConfig,
-    locator: IBaseLocator
+    locator: IBaseLocator,
+    waitNewRoundFn?: (page: Page, timerLocator: string, timerStart: number) => Promise<void>
 ): Promise<void> {
+
     try {
         // Luôn lấy choice đầu tiên từ danh sách nếu không có choice được chỉ định
         const choiceToUse = betChoice || gameConfig.choices[0];
@@ -70,7 +73,14 @@ export async function placeBet(
         console.log('✅ Đặt cược thành công!');
 
         // 5. Đợi vòng mới và kiểm tra kết quả
+        
+       // await WaitNewround(page, gameConfig.gameId, gameConfig);
+         if (waitNewRoundFn) {
+        await waitNewRoundFn(page, locator.timerLocator, gameConfig.timerStart);
+    } else {
         await WaitNewround(page, gameConfig.gameId, gameConfig);
+    }
+        
         const finalBalance = await getBalance(page, balanceLocator);
 
         if (finalBalance === balanceAfterBet) {

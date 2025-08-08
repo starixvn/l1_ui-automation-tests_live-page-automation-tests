@@ -20,6 +20,8 @@ export function getSpecFileByGameId(gameId: number): string {
   }
   if (gameId === 80) {
     return 'LivePage/games/80-CoinToss/smoke-tests/cointoss.spec.ts';
+  }if (gameId === 118) {
+    return 'TodayPage/games/118-RnGSoccer/smoke-tests/RnGSoccer.spec.ts';
   }
   throw new Error(`Spec file not found for GAME_ID = ${gameId}`);
 }

@@ -8,8 +8,8 @@ export interface EnvConfig {
 const envConfig: Record<string, EnvConfig> = {
   PRO_SG: {
     baseUrl: 'https://www.viva88.com/',
-    username: 'supertest30102094',
-    password: '123456bb',
+    username: 'supertestte120201080',
+    password: '1234bb',
   },
   PROVG_Credit: {
     baseUrl: 'https://www.nova88.com/',
