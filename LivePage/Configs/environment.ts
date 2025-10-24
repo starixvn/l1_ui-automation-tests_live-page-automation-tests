@@ -9,7 +9,7 @@ const envConfig: Record<string, EnvConfig> = {
   PRO_SG: {
     baseUrl: 'https://www.viva88.com/',
     username: 'supertestte120201080',
-    password: '1234bb',
+    password: '1234bbb',
   },
   PROVG_Credit: {
     baseUrl: 'https://www.nova88.com/',

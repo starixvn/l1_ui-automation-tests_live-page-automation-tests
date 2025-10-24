@@ -64,7 +64,7 @@ export async function Login(): Promise<{
       fullPage: true,
     });*/
     // close new popup
-  //  await page.locator('#popupPanel a').click();
+    await page.getByText('OK', { exact: true }).click();
    await page.locator('#six_score a').click();
     console.log('✅ Login successful!');
     return { browser, context, page };
